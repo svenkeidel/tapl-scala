@@ -10,7 +10,7 @@ object Evaluator {
       t2
     case TmIf(TmFalse, t2, t3) =>
       t3
-    case TmIf(t1, t2, t3) if !isVal(t1) =>
+    case TmIf(t1, t2, t3) =>
       val t11 = eval1(t1)
       TmIf(t11, t2, t3)
     case TmSucc(t1) =>
@@ -20,15 +20,15 @@ object Evaluator {
       TmZero
     case TmPred(TmSucc(nv1)) if isNumericVal(nv1) =>
       nv1
-    case TmPred(t1) if !isVal(t1) =>
+    case TmPred(t1) =>
       val t2 = eval1(t1)
       TmPred(t2)
     case TmIsZero(TmZero) =>
       TmTrue
     case TmIsZero(TmSucc(nv1)) if isNumericVal(nv1) =>
       TmFalse
-    case TmIsZero(t1) if !isVal(t1) =>
-      val t2 = eval(t1)
+    case TmIsZero(t1) =>
+      val t2 = eval1(t1)
       TmIsZero(t2)
     case _ => throw new NoRuleApplies(t)
   }
